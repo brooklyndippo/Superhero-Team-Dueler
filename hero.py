@@ -10,6 +10,8 @@ class Hero:
         self.current_health = starting_health
         self.abilities = list()
         self.armors = list()
+        self.deaths = 0
+        self.kills = 0
 
     # add OFFENSIVE abilities
     def add_ability(self, ability):
@@ -56,21 +58,38 @@ class Hero:
             opponent.take_damage(self.attack())
             #print(f'opp: {opponent.current_health}')
 
-        #print the results once one or both players are dead
+        #print the results if both players die at the same time
         if self.current_health <= 0 and opponent.current_health <= 0:
             print('DRAW')
+            self.add_kill(1)
+            opponent.add_kill(1)
+            self.add_death(1)
+            opponent.add_death(1)
 
+        #if SELF is the winner
         elif self.current_health > opponent.current_health:
             print(f'{self.name} defeats {opponent.name}.')
+            self.add_kill(1)
+            opponent.add_death(1)
 
+        #if OPPONENT is the winner
         else:
             print(f'{opponent.name} defeats {self.name}.')
+            opponent.add_kill(1)
+            self.add_death(1)
 
     def is_alive(self):
         if self.current_health <= 0:
             return False
         else:
             return True
+
+    #track game stats for kills and deaths
+    def add_kill(self, num_kills):
+        self.kills += num_kills
+
+    def add_death(self, num_deaths):
+        self.deaths += num_deaths
 
 
 
@@ -81,7 +100,7 @@ if __name__ == "__main__":
     hero.add_weapon(weapon)
     print(hero.attack())
     #--
-    slf = Hero("Grace Hopper")
+    slf = Hero("Grace Hopper", 1000)
     opp = Hero("Dumbledore")
     ability = Ability('snort', 30)
     opp.add_ability(ability)
