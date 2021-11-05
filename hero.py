@@ -1,6 +1,7 @@
 import random
 from ability import Ability
 from armor import Armor
+from weapon import Weapon
 
 class Hero:
     def __init__(self, name, starting_health=100):
@@ -13,6 +14,9 @@ class Hero:
     # add OFFENSIVE abilities
     def add_ability(self, ability):
         self.abilities.append(ability)
+
+    def add_weapon(self, weapon):
+        self.abilities.append(weapon)
 
     def attack(self):
         total_damage = 0
@@ -72,6 +76,11 @@ class Hero:
 
 #run test code only in this file
 if __name__ == "__main__":
+    hero = Hero("Wonder Woman")
+    weapon = Weapon("Lasso of Truth", 90)
+    hero.add_weapon(weapon)
+    print(hero.attack())
+    #--
     slf = Hero("Grace Hopper")
     opp = Hero("Dumbledore")
     ability = Ability('snort', 30)
